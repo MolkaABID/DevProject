@@ -28,16 +28,16 @@ pipeline {
                 // Étape de déploiement du backend vers Nexus Repository Manager
                 // Utilisez les configurations Nexus et Maven appropriées
             }
-        }
+        }*/
 
         stage('Junit') {
             steps {
                 // Étape de tests unitaires du backend
-               // sh 'mvn test'
+               sh 'mvn test'
             }
         }
 
-        stage('SonarQube') {
+        /*stage('SonarQube') {
             steps {
                 // Étape d'analyse de qualité du code avec SonarQube
                 // Utilisez la configuration SonarQube appropriée
