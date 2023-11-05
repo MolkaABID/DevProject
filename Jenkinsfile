@@ -2,7 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Compilation du Backend (Spring Boot)') {
+
+        stage('Git Checkout') {
+            steps {
+                git credentialsId: 'github-private-key', url: 'https://github.com/MolkaABID/DevProject.git'
+             }
+        }
+
+        /*stage('Compilation du Backend (Spring Boot)') {
             steps {
                 // Étape de compilation du backend
                 sh 'mvn clean package'
@@ -78,5 +85,5 @@ pipeline {
             // Actions à effectuer toujours, par exemple, pour envoyer des notifications par e-mail
             emailext subject: 'Résultat du pipeline Jenkins', body: 'Le pipeline Jenkins a été exécuté avec succès.', recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
-    }
+    }*/
 }
