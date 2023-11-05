@@ -9,13 +9,21 @@ pipeline {
              }
         }
 
-        stage('Backend') {
-            steps {
+         // stage('Backend') {
+             //steps {
                 // Étape de compilation du backend
-               sh 'mvn clean package'
+               //  sh 'mvn clean package'
+              //}
+          //}
+          stage('MVN CLEAN') {
+            steps {
+               sh 'mvn clean'
             }
         }
-
+          stage('Test') {
+            steps {
+               sh 'mvn test'
+            }
         /*stage('Frontend') {
             steps {
                 // Étape de compilation du frontend
