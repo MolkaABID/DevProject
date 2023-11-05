@@ -12,11 +12,11 @@ pipeline {
         stage('Backend') {
             steps {
                 // Étape de compilation du backend
-               // sh 'mvn clean package'
+               sh 'mvn clean package'
             }
         }
 
-        stage('Frontend') {
+        /*stage('Frontend') {
             steps {
                 // Étape de compilation du frontend
                // sh 'ng build'
@@ -78,7 +78,7 @@ pipeline {
                 // Utilisez les fichiers Docker Compose appropriés pour le déploiement
             }
         }
-    }
+    }*/
 
 
       post {
