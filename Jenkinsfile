@@ -86,4 +86,5 @@ pipeline {
             emailext subject: 'Résultat du pipeline Jenkins', body: 'Le pipeline Jenkins a été exécuté avec succès.', recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
     }*/
+    }
 }
