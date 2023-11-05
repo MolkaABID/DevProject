@@ -37,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Construction d'Images Docker') {
+        stage('Construction dImages Docker') {
             steps {
                 // Étape de création d'images Docker pour le backend et le frontend
                 // Utilisez les Dockerfiles appropriés
@@ -58,7 +58,7 @@ pipeline {
             }
         }
 
-        stage('Envoi d'Emails') {
+        stage('Envoi dEmails') {
             steps {
                 // Étape d'envoi de notifications par courrier électronique
                 // Utilisez la configuration du serveur de messagerie et envoyez des e-mails
