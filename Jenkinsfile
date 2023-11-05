@@ -81,14 +81,14 @@ pipeline {
     }
 
 
-    post {
+      post {
         always {
             emailext subject: 'Results for Jenkins',
                 body: 'success.',
                 to: 'molka.abid@esprit.tn',
                 recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
-    }
+      }
 
     }
 }
