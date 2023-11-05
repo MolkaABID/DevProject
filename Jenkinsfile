@@ -77,8 +77,8 @@ pipeline {
                 // Étape de déploiement de Grafana et Prometheus
                 // Utilisez les fichiers Docker Compose appropriés pour le déploiement
             }
-        }
-    }*/
+        }*/
+    }
 
 
       post {
