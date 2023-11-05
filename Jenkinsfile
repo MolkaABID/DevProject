@@ -24,6 +24,7 @@ pipeline {
             steps {
                sh 'mvn test'
             }
+          }
         /*stage('Frontend') {
             steps {
                 // Étape de compilation du frontend
