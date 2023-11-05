@@ -28,14 +28,14 @@ pipeline {
                 // Étape de déploiement du backend vers Nexus Repository Manager
                 // Utilisez les configurations Nexus et Maven appropriées
             }
-        }*/
+        }
 
         stage('Junit') {
             steps {
                 // Étape de tests unitaires du backend
                sh 'mvn test'
             }
-        }
+        }*/
 
         /*stage('SonarQube') {
             steps {
@@ -77,7 +77,7 @@ pipeline {
                 // Étape de déploiement de Grafana et Prometheus
                 // Utilisez les fichiers Docker Compose appropriés pour le déploiement
             }
-        }*/
+
     }
 
 
@@ -88,8 +88,8 @@ pipeline {
                 to: 'molka.abid@esprit.tn',
                 recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
-      }
+      }*/
 
-
+   }
 }
 
