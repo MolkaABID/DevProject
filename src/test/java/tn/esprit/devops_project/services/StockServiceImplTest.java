@@ -1,80 +1,63 @@
 package tn.esprit.devops_project.services;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
+import org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener;
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+
 import tn.esprit.devops_project.entities.Stock;
-import tn.esprit.devops_project.repositories.StockRepository;
-import tn.esprit.devops_project.services.StockServiceImpl;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
- class stock {
-    @Mock
-    StockRepository Repo;
+@Transactional
+@TestExecutionListeners({
+        DependencyInjectionTestExecutionListener.class,
+        DirtiesContextTestExecutionListener.class,
+        TransactionalTestExecutionListener.class,
+        DbUnitTestExecutionListener.class
+})
+@ActiveProfiles("test")
+class StockServiceImplTest {
+    @Autowired
+    private StockServiceImpl stockService;
 
-    @InjectMocks
-    StockServiceImpl Service;
-
-    Stock stock= Stock.builder().libelleStock("stock").qte(100).qteMin(10).build();
-    List<Stock> listStocks = new ArrayList<Stock>() {
-        {
-            add(Stock.builder().libelleStock("first").qte(10).qteMin(5).build());
-            add(Stock.builder().libelleStock("second").qte(200).qteMin(10).build());
-        }
-    };
-
+    @DatabaseSetup("/data-set/stock-data.xml")
     @Test
-     void testRetrieveStock() {
-        Mockito.when(Repo.findById(Mockito.anyLong())).thenReturn(Optional.of(stock));
-        @SuppressWarnings("removal")
-		Stock s1 = Service.retrieveStock(new Long(2));
-        Assertions.assertNotNull(s1);
+    void addStock() {
+        Stock stock = new Stock();
+        stock.setTitle("bon");
+        stockService.addStock(stock);
+        List<Stock> allStocks = stockService.retrieveAllStock();
+        assertEquals(2, allStocks.size());
     }
 
+    @DatabaseSetup("/data-set/stock-data.xml")
     @Test
-     void testAllRetrieveStock() {
-        Mockito.when(Repo.findAll()).thenReturn(listStocks);
-        List<Stock> lStocks = Service.retrieveAllStocks();
-        Assertions.assertNotNull(lStocks);
+    void retrieveStock() {
+        final Stock stock = this.stockService.retrieveStock(1L);
+        assertEquals("stock 1", stock.getTitle());
     }
 
+    @DatabaseSetup("/data-set/stock-data.xml")
     @Test
-     void testAddstock() {
-        Mockito.when(Repo.save(stock)).thenReturn(stock);
-        Stock s1 = Service.addStock(stock);
-        Assertions.assertNotNull(s1);
-
+    void retrieveAllStock() {
+        final List<Stock> allStocks = this.stockService.retrieveAllStock();
+        assertEquals(1, allStocks.size());
     }
-    @Test
-     void testUpdatestock() {
-    	stock.setQteMin(5);
-        Mockito.when(Repo.save(stock)).thenReturn(stock);
-        Stock s1 = Service.updateStock(stock);
-        Assertions.assertEquals(stock,s1);
-
-    }
-
-    @Test
-     void testDeletestock() {
-    	Service.deleteStock(stock.getIdStock());
-        Mockito.verify(Repo, Mockito.times(1)).deleteById(stock.getIdStock());
-    }
- 
-    
-
-    
-    
-    
 }
