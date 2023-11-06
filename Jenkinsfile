@@ -27,10 +27,17 @@ pipeline {
             }
           }
           stage('MVN COMPILE') {
-                      steps {
-                         sh 'mvn compile'
-                     }
-                  }
+              steps {
+                sh 'mvn compile'
+               }
+           }
+           /*
+            stage('Integration testing') {
+            steps {
+                sh 'mvn verify -DskipUnitTestes'
+                 }
+            }*/
+
         /*stage('Frontend') {
             steps {
                 // Étape de compilation du frontend
