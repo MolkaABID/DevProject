@@ -5,6 +5,7 @@ pipeline {
 
         stage('Git Checkout') {
             steps {
+                echo 'cloning project from GIT'
                 git credentialsId: 'github-private-key', url: 'https://github.com/MolkaABID/DevProject.git'
              }
         }
