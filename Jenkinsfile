@@ -31,6 +31,7 @@ pipeline {
                 sh 'mvn compile'
                }
            }
+        ///////////////////////////////////////
            /*
             stage('Integration testing') {
             steps {
