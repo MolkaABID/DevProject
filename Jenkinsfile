@@ -41,10 +41,7 @@ pipeline {
          stage('sonarqube') {
                steps  {
 
-                     sh "mvn sonar:sonar \
-                            -Dsonar.projectKey=DevOps_Project \
-                            -Dsonar.host.url=http://192.168.1.20:9000
-                             "
+                     sh "mvn sonar:sonar"
 
                   }
 
