@@ -27,28 +27,32 @@ pipeline {
                sh 'mvn test'
             }
           }
+        stage('Integration testing') {
+          steps {
+            sh 'mvn verify -DskipUnitTestes'
+                 }
+            }
           stage('MVN COMPILE') {
               steps {
                 sh 'mvn compile'
                }
            }
+
+
+
            stage ('SonarQube'){
                steps {
 
                sh "mvn sonar:sonar \
-                      -Dsonar.projectKey=admin  \
+                      -Dsonar.projectKey=DevOps_Project  \
                       -Dsonar.host.url=http://192.168.33.10:9000\
                       -Dsonar.login=molka"
 
                }
            }
         ///////////////////////////////////////
-           /*
-            stage('Integration testing') {
-            steps {
-                sh 'mvn verify -DskipUnitTestes'
-                 }
-            }*/
+
+
 
         /*stage('Frontend') {
             steps {
