@@ -104,28 +104,27 @@ pipeline {
 
 
    }
-    post {
-        always {
-              emailext subject: 'Results for Jenkins',
-              body: 'success jenkins.',
-              to: 'molka.abid@esprit.tn',
-              recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
-           }
-        }
-
    post {
+       always {
+           emailext subject: 'Results for Jenkins',
+               body: 'Success Jenkins.',
+               to: 'molka.abid@esprit.tn',
+               recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
+       }
 
        success {
            mail to: "molka.abid@esprit.tn",
-           subject: "success",
-           body: "success on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
-               }
+           subject: "Success",
+           body: "Success on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
+       }
        failure {
-         mail to: "molka.abid@esprit.tn",
-         subject: "Failure",
-         body: "Failure on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL} "
-         }
-    }
+           mail to: "molka.abid@esprit.tn",
+           subject: "Failure",
+           body: "Failure on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
+       }
+   }
+
+  }
 
 }
 
