@@ -127,13 +127,13 @@ pipeline {
                 recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
       }*/
-
+///////////////////////////////////////////
    }
    post {
       success {
        mail to: "molka.abid@esprit.tn",
        subject: "success",
-        body: "success on job "
+        body: "success on job"
                }
      failure {
       mail to: "molka.abid@esprit.tn",
