@@ -41,6 +41,7 @@ pipeline {
                       -Dsonar.login=molka"
 
                }
+           }
         ///////////////////////////////////////
            /*
             stage('Integration testing') {
