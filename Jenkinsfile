@@ -39,13 +39,14 @@ pipeline {
            }
 
          stage('sonarqube') {
-                 {
+               steps  {
 
                      sh "mvn sonar:sonar \
                             -Dsonar.projectKey=DevOps_Project \
-                            -Dsonar.host.url=http://192.168.1.20:9000 "
+                            -Dsonar.host.url=http://192.168.1.20:9000
+                             "
 
-                     }
+                  }
 
          }
             /*sqa_d5029b69cf0ceef39d5a946d5cbcdb0319e7cd79*/
@@ -116,7 +117,7 @@ pipeline {
            subject: "Failure",
            body: "Failure on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
        }
-   }
+      }
 
 
 
