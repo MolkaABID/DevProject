@@ -111,15 +111,21 @@ pipeline {
         }
 
 ////////////////////////////////////
-   }
+
    post {
-      success {
-       mail to: "molka.abid@esprit.tn",
-       subject: "success",
-        body: "success on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
+     always {
+           emailext subject: 'Results for Jenkins',
+           body: 'success.',
+           to: 'molka.abid@esprit.tn',
+           recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
+        }
+       success {
+           mail to: "molka.abid@esprit.tn",
+           subject: "success",
+           body: "success on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}"
                }
-     failure {
-      mail to: "molka.abid@esprit.tn",
+       failure {
+         mail to: "molka.abid@esprit.tn",
          subject: "Failure",
          body: "Failure on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL} "
          }
