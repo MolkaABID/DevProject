@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment{
-            PATH = "$PATH:/usr/bin/mvn"
-    }
 
     stages {
 
