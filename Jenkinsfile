@@ -26,6 +26,7 @@ pipeline {
         }
           stage('Test') {
             steps {
+               echo 'hana ntestiw'
                sh 'mvn test'
             }
           }
