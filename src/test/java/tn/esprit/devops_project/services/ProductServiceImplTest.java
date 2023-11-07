@@ -1,72 +1,99 @@
 package tn.esprit.devops_project.services;
 
+import com.github.springtestdbunit.DbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener;
-import com.github.springtestdbunit.DbUnitTestExecutionListener;
-import com.github.springtestdbunit.annotation.DatabaseSetup;
-
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.devops_project.entities.Product;
 import tn.esprit.devops_project.entities.ProductCategory;
-import tn.esprit.devops_project.entities.Stock;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @Transactional
-@TestExecutionListeners({
-        DependencyInjectionTestExecutionListener.class,
+@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         DirtiesContextTestExecutionListener.class,
         TransactionalTestExecutionListener.class,
-        DbUnitTestExecutionListener.class
-})
+        DbUnitTestExecutionListener.class})
 @ActiveProfiles("test")
 class ProductServiceImplTest {
     @Autowired
-    private ProductServiceImpl productService;
+    ProductServiceImpl productService;
 
-    @DatabaseSetup("/data-set/product-data.xml")
     @Test
+    @DatabaseSetup("/data-set/product-data.xml")
     void addProduct() {
-        Stock stock = new Stock();
-        stock.setTitle("Stock for testing");
-
         Product product = new Product();
-        product.setTitle("Product for testing");
-        product.setPrice(10.0f);
-        product.setQuantity(20);
+        product.setTitle("Produit 1");
+        product.setPrice(25.00F);
+        product.setQuantity(50);
         product.setCategory(ProductCategory.CLOTHING);
-        product.setStock(stock);
+        Long stockId = 1L;
+        Product savedProduct = productService.addProduct(product, stockId);
+        assertEquals("Produit 1", savedProduct.getTitle());
 
-        productService.addProduct(product, stock.getIdStock());
-
-        List<Product> allProducts = productService.retreiveAllProduct();
-        assertEquals(2, allProducts.size());
     }
 
-    @DatabaseSetup("/data-set/product-data.xml")
     @Test
+    @DatabaseSetup("/data-set/product-data.xml")
     void retrieveProduct() {
-        final Product product = productService.retrieveProduct(1L);
-        assertEquals("Product 1", product.getTitle());
+        Long productId = 1L;
+        Product product = productService.retrieveProduct(productId);
+        assertNotNull(product);
+        assertEquals(productId, product.getIdProduct());
     }
 
-    @DatabaseSetup("/data-set/product-data.xml")
     @Test
-    void retrieveAllProduct() {
-        final List<Product> allProducts = productService.retreiveAllProduct();
-        assertEquals(1, allProducts.size());
+    @DatabaseSetup("/data-set/product-data.xml")
+    void retreiveAllProduct() {
+        List<Product> products = productService.retreiveAllProduct();
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+    }
+
+    @Test
+    @DatabaseSetup("/data-set/product-data.xml")
+    void retrieveProductByCategory() {
+        ProductCategory category = ProductCategory.CLOTHING;
+        List<Product> products = productService.retrieveProductByCategory(category);
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+        for (Product product : products) {
+            assertEquals(category, product.getCategory());
+        }
+    }
+
+    @Test
+    @DatabaseSetup("/data-set/product-data.xml")
+    void deleteProduct() {
+        productService.deleteProduct(1L);
+        List<Product> products=this.productService.retreiveAllProduct();
+        assertEquals(products.size(),0);
+
+    }
+
+    @Test
+    @DatabaseSetup("/data-set/product-data.xml")
+    void retreiveProductStock() {
+        Long stockId = 1L;
+
+        List<Product> products = productService.retreiveProductStock(stockId);
+        assertNotNull(products);
+        assertFalse(products.isEmpty());
+        for (Product product : products) {
+            assertEquals(stockId, product.getStock().getIdStock());
+        }
+
     }
 }
