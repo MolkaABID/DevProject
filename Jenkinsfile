@@ -68,19 +68,9 @@ pipeline {
             }
         }
 
-        stage('Junit') {
-            steps {
-                // Étape de tests unitaires du backend
-               sh 'mvn test'
-            }
-        }*/
 
-        /*stage('SonarQube') {
-            steps {
-                // Étape d'analyse de qualité du code avec SonarQube
-                // Utilisez la configuration SonarQube appropriée
-            }
-        }
+
+
 
         stage('Docker Image') {
             steps {
@@ -103,13 +93,6 @@ pipeline {
             }
         }
 
-        stage('Email') {
-            steps {
-                // Étape d'envoi de notifications par courrier électronique
-                // Utilisez la configuration du serveur de messagerie et envoyez des e-mails
-            }
-        }
-
         stage('Grafana & Prometheus') {
             steps {
                 // Étape de déploiement de Grafana et Prometheus
@@ -117,7 +100,7 @@ pipeline {
             }
 
     }
-
+      */
 
       post {
         always {
@@ -126,7 +109,7 @@ pipeline {
                 to: 'molka.abid@esprit.tn',
                 recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
         }
-      }*/
+
 
    }
    post {
