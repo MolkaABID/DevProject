@@ -9,7 +9,7 @@ pipeline {
                 git credentialsId: 'github-private-key', url: 'https://github.com/MolkaABID/DevProject.git'
              }
         }
-
+///
          // stage('Backend') {
              //steps {
                 // Étape de compilation du backend
