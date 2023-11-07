@@ -105,12 +105,7 @@ pipeline {
 
    }
    post {
-       always {
-           emailext subject: 'Results for Jenkins',
-               body: 'Success Jenkins.',
-               to: 'molka.abid@esprit.tn',
-               recipientProviders: [culprits(), developers(), brokenBuildSuspects()]
-       }
+
 
        success {
            mail to: "molka.abid@esprit.tn",
