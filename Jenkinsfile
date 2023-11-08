@@ -9,13 +9,7 @@ pipeline {
                 git credentialsId: 'github-private-key', url: 'https://github.com/MolkaABID/DevProject.git'
              }
         }
-/////////
-         // stage('Backend') {
-             //steps {
-                // Étape de compilation du backend
-               //  sh 'mvn clean package'
-              //}
-          //}
+
           stage('MVN CLEAN') {
             steps {
                sh 'mvn clean'
@@ -38,8 +32,6 @@ pipeline {
                }
            }
 
-
-
            stage ('SonarQube'){
                steps {
 
@@ -52,7 +44,15 @@ pipeline {
            }
         ///////////////////////////////////////
 
+            stage('Nexus') {
 
+              steps {
+
+                     sh 'mvn deploy'
+
+                    }
+
+            }
 
         /*stage('Frontend') {
             steps {
@@ -61,12 +61,7 @@ pipeline {
             }
         }
 
-        stage('Nexus') {
-            steps {
-                // Étape de déploiement du backend vers Nexus Repository Manager
-                // Utilisez les configurations Nexus et Maven appropriées
-            }
-        }
+
 
 
 
