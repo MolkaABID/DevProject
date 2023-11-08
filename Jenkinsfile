@@ -55,13 +55,10 @@ pipeline {
               stage("docker image"){
                         steps {
 
-                            script{
-                                sh 'docker build -t DevProject. '
-                                sh'docker tag DevProject MolkaABID/DevProject'
+
+                                sh 'docker build -t MolkaABID/DevProject . '
 
                             }
-
-                        }
 
                     }
         ///////////////////////////////////////
