@@ -89,10 +89,6 @@
 			</exclusions>
 		</dependency>
 
-
-
-		<!-- Other dependencies -->
-
 		<dependency>
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-registry-prometheus</artifactId>
@@ -116,16 +112,25 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version><!--$NO-MVN-MAN-VER$-->
+			</plugin>
 
 		</plugins>
+
 		<finalName>devops-integration</finalName>
 	</build>
-	<!-- Deploy to Nexus -->
+
+
+
+	<!-- Nexus -->
 	<distributionManagement>
 		<repository>
 			<id>deploymentRepo</id>
-			<name>Nexus Repository</name>
-			<url>http://localhost:8081/repository/maven-releases/</url>
+			<name>admin</name>
+			<url>http://192.168.33.10:8081/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
 
